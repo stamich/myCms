@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;

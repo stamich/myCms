@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;

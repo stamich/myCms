@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

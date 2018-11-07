@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;

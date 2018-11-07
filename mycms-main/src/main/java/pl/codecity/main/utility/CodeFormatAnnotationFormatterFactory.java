@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.Formatter;

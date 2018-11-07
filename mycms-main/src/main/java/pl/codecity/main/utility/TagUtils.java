@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import pl.codecity.main.model.Tag;

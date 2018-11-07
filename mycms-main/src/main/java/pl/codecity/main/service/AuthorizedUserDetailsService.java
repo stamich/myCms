@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.wallride.domain.User;
-import org.wallride.repository.UserRepository;
-import org.wallride.support.AuthorizedUser;
+import pl.codecity.main.model.User;
+import pl.codecity.main.repository.UserRepository;
+import pl.codecity.main.utility.AuthorizedUser;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;

@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
 import org.slf4j.Logger;
@@ -33,14 +17,14 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MessageCodesResolver;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.domain.Article;
-import org.wallride.domain.Tag;
-import org.wallride.exception.DuplicateNameException;
-import org.wallride.model.*;
-import org.wallride.repository.ArticleRepository;
-import org.wallride.repository.TagRepository;
-import org.wallride.support.AuthorizedUser;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.DuplicateNameException;
+import pl.codecity.main.model.Article;
+import pl.codecity.main.model.Tag;
+import pl.codecity.main.repository.ArticleRepository;
+import pl.codecity.main.repository.TagRepository;
+import pl.codecity.main.request.*;
+import pl.codecity.main.utility.AuthorizedUser;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -63,7 +47,7 @@ public class TagService {
 	@Inject
 	private PlatformTransactionManager transactionManager;
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Tag createTag(TagCreateRequest request, AuthorizedUser authorizedUser) {
 		Tag duplicate = tagRepository.findOneByNameAndLanguage(request.getName(), request.getLanguage());
 		if (duplicate != null) {
@@ -83,7 +67,7 @@ public class TagService {
 		return tagRepository.saveAndFlush(tag);
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Tag updateTag(TagUpdateRequest request, AuthorizedUser authorizedUser) {
 		Tag tag = tagRepository.findOneForUpdateByIdAndLanguage(request.getId(), request.getLanguage());
 		LocalDateTime now = LocalDateTime.now();
@@ -104,7 +88,7 @@ public class TagService {
 		return tagRepository.saveAndFlush(tag);
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Tag mergeTags(TagMergeRequest request, AuthorizedUser authorizedUser) {
 		// Get all articles that have tag for merging
 		ArticleSearchRequest searchRequest = new ArticleSearchRequest()
@@ -131,7 +115,7 @@ public class TagService {
 		return mergedTag;
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Tag deleteTag(TagDeleteRequest request, BindingResult result) {
 		Tag tag = tagRepository.findOneForUpdateByIdAndLanguage(request.getId(), request.getLanguage());
 		tagRepository.delete(tag);
@@ -139,7 +123,7 @@ public class TagService {
 	}
 
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public List<Tag> bulkDeleteTag(TagBulkDeleteRequest bulkDeleteRequest, final BindingResult result) {
 		List<Tag> tags = new ArrayList<>();
 		for (long id : bulkDeleteRequest.getIds()) {

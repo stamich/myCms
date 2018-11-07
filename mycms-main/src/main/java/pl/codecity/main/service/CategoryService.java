@@ -9,19 +9,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.domain.Category;
-import org.wallride.domain.Category_;
-import org.wallride.exception.ServiceException;
-import org.wallride.model.CategoryCreateRequest;
-import org.wallride.model.CategorySearchRequest;
-import org.wallride.model.CategoryUpdateRequest;
-import org.wallride.repository.CategoryRepository;
-import org.wallride.repository.CategorySpecifications;
-import org.wallride.support.AuthorizedUser;
-import org.wallride.support.CodeFormatter;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.ServiceException;
 import pl.codecity.main.model.Category;
+import pl.codecity.main.model.Category_;
 import pl.codecity.main.repository.CategoryRepository;
+import pl.codecity.main.repository.CategorySpecifications;
+import pl.codecity.main.request.CategoryCreateRequest;
+import pl.codecity.main.request.CategorySearchRequest;
+import pl.codecity.main.request.CategoryUpdateRequest;
+import pl.codecity.main.utility.AuthorizedUser;
+import pl.codecity.main.utility.CodeFormatter;
 
 import javax.inject.Inject;
 import java.text.ParseException;
@@ -35,7 +33,7 @@ public class CategoryService {
 	@Inject
 	private CategoryRepository categoryRepository;
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Category createCategory(CategoryCreateRequest request, AuthorizedUser authorizedUser) {
 		Category category = new Category();
 
@@ -74,7 +72,7 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Category updateCategory(CategoryUpdateRequest request, AuthorizedUser authorizedUser) {
 		categoryRepository.lock(request.getId());
 		Category category = categoryRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -119,7 +117,7 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public void updateCategoryHierarchy(List<Map<String, Object>> data, String language) {
 		for (int i = 0; i < data.size(); i++) {
 			Map<String, Object> map = data.get(i);
@@ -140,7 +138,7 @@ public class CategoryService {
 		}
 	}
 
-	@CacheEvict(value = {WallRideCacheConfiguration.ARTICLE_CACHE, WallRideCacheConfiguration.PAGE_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.ARTICLE_CACHE, MyCmsCacheConfiguration.PAGE_CACHE}, allEntries = true)
 	public Category deleteCategory(long id, String language) {
 		categoryRepository.lock(id);
 		Category category = categoryRepository.findOneByIdAndLanguage(id, language);

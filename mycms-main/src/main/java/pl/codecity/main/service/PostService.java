@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
 import com.google.api.services.analytics.Analytics;
@@ -59,6 +43,17 @@ import org.wallride.web.controller.guest.article.ArticleDescribeController;
 import org.wallride.web.controller.guest.page.PageDescribeController;
 import org.wallride.web.support.BlogLanguageRewriteMatch;
 import org.wallride.web.support.BlogLanguageRewriteRule;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.GoogleAnalyticsException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.BlogLanguage;
+import pl.codecity.main.model.GoogleAnalytics;
+import pl.codecity.main.model.PopularPost;
+import pl.codecity.main.model.Post;
+import pl.codecity.main.repository.PopularPostRepository;
+import pl.codecity.main.repository.PostRepository;
+import pl.codecity.main.request.PostSearchRequest;
+import pl.codecity.main.utility.GoogleAnalyticsUtils;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -113,8 +108,8 @@ public class PostService {
 		}
 
 		if (!CollectionUtils.isEmpty(posts)) {
-			cacheManager.getCache(WallRideCacheConfiguration.ARTICLE_CACHE).clear();
-			cacheManager.getCache(WallRideCacheConfiguration.PAGE_CACHE).clear();
+			cacheManager.getCache(MyCmsCacheConfiguration.ARTICLE_CACHE).clear();
+			cacheManager.getCache(MyCmsCacheConfiguration.PAGE_CACHE).clear();
 		}
 
 		return posts;
@@ -150,7 +145,7 @@ public class PostService {
 	 * @param maxRank
 	 * @see PostService#getPopularPosts(String, PopularPost.Type)
 	 */
-	@CacheEvict(value = WallRideCacheConfiguration.POPULAR_POST_CACHE, key = "'list.type.' + #blogLanguage.language + '.' + #type")
+	@CacheEvict(value = MyCmsCacheConfiguration.POPULAR_POST_CACHE, key = "'list.type.' + #blogLanguage.language + '.' + #type")
 	public void updatePopularPosts(BlogLanguage blogLanguage, PopularPost.Type type, int maxRank) {
 		logger.info("Start update of the popular posts");
 
@@ -312,7 +307,7 @@ public class PostService {
 	 * @return
 	 * @see PostService#updatePopularPosts(BlogLanguage, PopularPost.Type, int)
 	 */
-	@Cacheable(value = WallRideCacheConfiguration.POPULAR_POST_CACHE, key = "'list.type.' + #language + '.' + #type")
+	@Cacheable(value = MyCmsCacheConfiguration.POPULAR_POST_CACHE, key = "'list.type.' + #language + '.' + #type")
 	public SortedSet<PopularPost> getPopularPosts(String language, PopularPost.Type type) {
 		Specification<PopularPost> spec = (root, query, cb) -> {
 			Join<PopularPost, Post> post = (Join<PopularPost, Post>) root.fetch(PopularPost_.post);

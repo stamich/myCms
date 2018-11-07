@@ -1,9 +1,9 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.wallride.domain.Category;
-import org.wallride.model.TreeNode;
-import org.wallride.service.CategoryService;
+import pl.codecity.main.model.Category;
+import pl.codecity.main.request.TreeNode;
+import pl.codecity.main.service.CategoryService;
 
 import java.util.ArrayList;
 import java.util.Collection;

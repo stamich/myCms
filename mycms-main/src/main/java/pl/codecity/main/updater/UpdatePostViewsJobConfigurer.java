@@ -11,19 +11,18 @@ import org.springframework.context.annotation.Import;
 
 import javax.inject.Inject;
 
-@Import({
-		UpdatePostViewsItemReader.class,
-		UpdatePostViewsItemWriter.class,
-})
+@Import({UpdatePostViewsItemReader.class, UpdatePostViewsItemWriter.class})
 public class UpdatePostViewsJobConfigurer {
 
 	@Inject
 	private JobBuilderFactory jobBuilders;
+
 	@Inject
 	private StepBuilderFactory stepBuilders;
 
 	@Inject
 	private UpdatePostViewsItemReader updatePostViewsItemReader;
+
 	@Inject
 	private UpdatePostViewsItemWriter updatePostViewsItemWriter;
 

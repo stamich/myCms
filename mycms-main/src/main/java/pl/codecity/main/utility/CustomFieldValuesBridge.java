@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.apache.lucene.document.Document;
 import org.hibernate.search.bridge.FieldBridge;

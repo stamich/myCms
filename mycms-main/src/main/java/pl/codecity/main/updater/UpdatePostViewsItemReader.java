@@ -10,7 +10,7 @@ import pl.codecity.main.exception.GoogleAnalyticsException;
 import pl.codecity.main.model.Blog;
 import pl.codecity.main.model.GoogleAnalytics;
 import pl.codecity.main.service.BlogService;
-import pl.codecity.main.utilities.GoogleAnalyticsUtils;
+import pl.codecity.main.utility.GoogleAnalyticsUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;

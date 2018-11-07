@@ -1,21 +1,6 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,6 +44,20 @@ import org.wallride.repository.PasswordResetTokenRepository;
 import org.wallride.repository.UserInvitationRepository;
 import org.wallride.repository.UserRepository;
 import org.wallride.support.AuthorizedUser;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.DuplicateEmailException;
+import pl.codecity.main.exception.DuplicateLoginIdException;
+import pl.codecity.main.exception.EmailNotFoundException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.Blog;
+import pl.codecity.main.model.PasswordResetToken;
+import pl.codecity.main.model.User;
+import pl.codecity.main.model.UserInvitation;
+import pl.codecity.main.repository.PasswordResetTokenRepository;
+import pl.codecity.main.repository.UserInvitationRepository;
+import pl.codecity.main.repository.UserRepository;
+import pl.codecity.main.request.*;
+import pl.codecity.main.utility.AuthorizedUser;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -163,7 +162,7 @@ public class UserService {
 		return passwordResetToken;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public User updateUser(UserUpdateRequest form, Errors errors, AuthorizedUser authorizedUser) throws ValidationException {
 		User user = userRepository.findOneForUpdateById(form.getId());
 		user.setName(form.getName());
@@ -175,7 +174,7 @@ public class UserService {
 		return user;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public User updateProfile(ProfileUpdateRequest request, AuthorizedUser updatedBy) {
 		User user = userRepository.findOneForUpdateById(request.getUserId());
 		if (user == null) {
@@ -204,7 +203,7 @@ public class UserService {
 		return userRepository.saveAndFlush(user);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public User updatePassword(PasswordUpdateRequest request, PasswordResetToken passwordResetToken) {
 		User user = userRepository.findOneForUpdateById(request.getUserId());
 		if (user == null) {
@@ -256,7 +255,7 @@ public class UserService {
 		return user;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public User updatePassword(PasswordUpdateRequest request, AuthorizedUser updatedBy) {
 		User user = userRepository.findOneForUpdateById(request.getUserId());
 		if (user == null) {
@@ -269,14 +268,14 @@ public class UserService {
 		return userRepository.saveAndFlush(user);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public User deleteUser(UserDeleteRequest form, BindingResult result) throws BindException {
 		User user = userRepository.findOneForUpdateById(form.getId());
 		userRepository.delete(user);
 		return user;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	@Transactional(propagation= Propagation.NOT_SUPPORTED)
 	public List<User> bulkDeleteUser(UserBulkDeleteRequest bulkDeleteForm, BindingResult result) {
 		List<User> users = new ArrayList<>();
@@ -312,7 +311,7 @@ public class UserService {
 		return users;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public List<UserInvitation> inviteUsers(UserInvitationCreateRequest form, BindingResult result, AuthorizedUser authorizedUser) throws MessagingException {
 		String[] recipients = StringUtils.commaDelimitedListToStringArray(form.getInvitees());
 
@@ -364,7 +363,7 @@ public class UserService {
 		return invitations;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public UserInvitation inviteAgain(UserInvitationResendRequest form, BindingResult result, AuthorizedUser authorizedUser) throws MessagingException {
 		LocalDateTime now = LocalDateTime.now();
 
@@ -404,7 +403,7 @@ public class UserService {
 		return invitation;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public UserInvitation deleteUserInvitation(UserInvitationDeleteRequest request) {
 		UserInvitation invitation = userInvitationRepository.findOneForUpdateByToken(request.getToken());
 		userInvitationRepository.delete(invitation);

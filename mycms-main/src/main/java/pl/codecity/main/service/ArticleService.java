@@ -34,7 +34,17 @@ import org.wallride.repository.*;
 import org.wallride.support.AuthorizedUser;
 import org.wallride.support.CodeFormatter;
 import org.wallride.web.controller.admin.article.CustomFieldValueEditForm;
-import pl.codecity.main.repository.ArticleRepository;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.configuration.MyCmsProperties;
+import pl.codecity.main.exception.DuplicateCodeException;
+import pl.codecity.main.exception.EmptyCodeException;
+import pl.codecity.main.exception.NotNullException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.*;
+import pl.codecity.main.repository.*;
+import pl.codecity.main.request.*;
+import pl.codecity.main.utility.AuthorizedUser;
+import pl.codecity.main.utility.CodeFormatter;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -72,14 +82,14 @@ public class ArticleService {
 	private PlatformTransactionManager transactionManager;
 
 	@Inject
-	private WallRideProperties wallRideProperties;
+	private MyCmsProperties wallRideProperties;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	private static Logger logger = LoggerFactory.getLogger(ArticleService.class);
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article createArticle(ArticleCreateRequest request, Post.Status status, AuthorizedUser authorizedUser) {
 		LocalDateTime now = LocalDateTime.now();
 
@@ -220,7 +230,7 @@ public class ArticleService {
 		return articleRepository.save(article);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article saveArticleAsDraft(ArticleUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Article article = articleRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -271,7 +281,7 @@ public class ArticleService {
 		}
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article saveArticleAsPublished(ArticleUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Article article = articleRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -290,7 +300,7 @@ public class ArticleService {
 		return published;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article saveArticleAsUnpublished(ArticleUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Article article = articleRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -309,7 +319,7 @@ public class ArticleService {
 		return unpublished;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article saveArticle(ArticleUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Article article = articleRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -461,7 +471,7 @@ public class ArticleService {
 		return articleRepository.save(article);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public Article deleteArticle(ArticleDeleteRequest request, BindingResult result) throws BindException {
 		postRepository.lock(request.getId());
 		Article article = articleRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -469,7 +479,7 @@ public class ArticleService {
 		return article;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public List<Article> bulkPublishArticle(ArticleBulkPublishRequest request, AuthorizedUser authorizedUser) {
 		List<Article> articles = new ArrayList<>();
 		for (long id : request.getIds()) {
@@ -515,7 +525,7 @@ public class ArticleService {
 		return articles;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public List<Article> bulkUnpublishArticle(ArticleBulkUnpublishRequest request, AuthorizedUser authorizedUser) {
 		List<Article> articles = new ArrayList<>();
 		for (long id : request.getIds()) {
@@ -536,7 +546,7 @@ public class ArticleService {
 	}
 
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
-	@CacheEvict(value = WallRideCacheConfiguration.ARTICLE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.ARTICLE_CACHE, allEntries = true)
 	public List<Article> bulkDeleteArticle(ArticleBulkDeleteRequest bulkDeleteRequest, BindingResult result) {
 		List<Article> articles = new ArrayList<>();
 		for (long id : bulkDeleteRequest.getIds()) {
@@ -581,7 +591,7 @@ public class ArticleService {
 		return getArticles(request, pageable);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.ARTICLE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.ARTICLE_CACHE)
 	public Page<Article> getArticles(ArticleSearchRequest request, Pageable pageable) {
 		return articleRepository.search(request, pageable);
 	}
@@ -600,12 +610,12 @@ public class ArticleService {
 		return articles;
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.ARTICLE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.ARTICLE_CACHE)
 	public SortedSet<Article> getArticlesByCategoryCode(String language, String code, Post.Status status) {
 		return getArticlesByCategoryCode(language, code, status, 10);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.ARTICLE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.ARTICLE_CACHE)
 	public SortedSet<Article> getArticlesByCategoryCode(String language, String code, Post.Status status, int size) {
 		ArticleSearchRequest request = new ArticleSearchRequest()
 				.withLanguage(language)
@@ -617,7 +627,7 @@ public class ArticleService {
 		return new TreeSet<>(page.getContent());
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.ARTICLE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.ARTICLE_CACHE)
 	public SortedSet<Article> getLatestArticles(String language, Post.Status status, int size) {
 		ArticleSearchRequest request = new ArticleSearchRequest()
 				.withLanguage(language)
@@ -636,7 +646,7 @@ public class ArticleService {
 		return articleRepository.findOneByIdAndLanguage(id, language);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.ARTICLE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.ARTICLE_CACHE)
 	public Article getArticleByCode(String code, String language) {
 		return articleRepository.findOneByCodeAndLanguage(code, language);
 	}

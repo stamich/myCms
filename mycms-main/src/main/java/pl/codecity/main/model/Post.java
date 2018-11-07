@@ -3,7 +3,7 @@ package pl.codecity.main.model;
 import org.hibernate.annotations.*;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
-import pl.codecity.main.utilities.CustomFieldValuesBridge;
+import pl.codecity.main.utility.CustomFieldValuesBridge;
 
 
 import javax.persistence.*;

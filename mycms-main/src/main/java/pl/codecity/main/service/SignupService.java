@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,6 +15,16 @@ import org.wallride.repository.UserInvitationRepository;
 import org.wallride.repository.UserRepository;
 import org.wallride.support.AuthorizedUser;
 import org.wallride.web.support.HttpForbiddenException;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.DuplicateEmailException;
+import pl.codecity.main.exception.DuplicateLoginIdException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.User;
+import pl.codecity.main.model.UserInvitation;
+import pl.codecity.main.repository.UserInvitationRepository;
+import pl.codecity.main.repository.UserRepository;
+import pl.codecity.main.request.SignupRequest;
+import pl.codecity.main.utility.AuthorizedUser;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -62,12 +56,12 @@ public class SignupService {
 		return true;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public AuthorizedUser signup(SignupRequest request, User.Role role) throws ServiceException {
 		return signup(request, role, null);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.USER_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.USER_CACHE, allEntries = true)
 	public AuthorizedUser signup(SignupRequest request, User.Role role, String token) throws ServiceException {
 		UserInvitation invitation = null;
 		if (token != null) {

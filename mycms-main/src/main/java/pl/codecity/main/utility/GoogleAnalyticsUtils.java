@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -64,7 +64,6 @@ public abstract class GoogleAnalyticsUtils {
 			logger.warn("Failed to synchronize with Google Analytics", e);
 			throw new GoogleAnalyticsException(e);
 		}
-
 		return analytics;
 	}
 }

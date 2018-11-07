@@ -15,13 +15,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.domain.Blog;
-import org.wallride.domain.GoogleAnalytics;
-import org.wallride.exception.GoogleAnalyticsException;
-import org.wallride.exception.ServiceException;
-import org.wallride.model.GoogleAnalyticsUpdateRequest;
-import org.wallride.repository.BlogRepository;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.exception.GoogleAnalyticsException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.Blog;
+import pl.codecity.main.model.GoogleAnalytics;
+import pl.codecity.main.repository.BlogRepository;
+import pl.codecity.main.request.GoogleAnalyticsUpdateRequest;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
@@ -42,7 +42,7 @@ public class BlogService {
 
 	private static Logger logger = LoggerFactory.getLogger(BlogService.class);
 
-	@CacheEvict(value = WallRideCacheConfiguration.BLOG_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.BLOG_CACHE, allEntries = true)
 	public GoogleAnalytics updateGoogleAnalytics(GoogleAnalyticsUpdateRequest request) {
 		byte[] p12;
 		try {
@@ -101,7 +101,7 @@ public class BlogService {
 		return blog.getGoogleAnalytics();
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.BLOG_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.BLOG_CACHE, allEntries = true)
 	public GoogleAnalytics deleteGoogleAnalytics(long blogId) {
 		Blog blog = blogRepository.findOneForUpdateById(blogId);
 		GoogleAnalytics googleAnalytics = blog.getGoogleAnalytics();
@@ -110,7 +110,7 @@ public class BlogService {
 		return googleAnalytics;
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.BLOG_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.BLOG_CACHE)
 	public Blog getBlogById(long id) {
 		return blogRepository.findOneById(id);
 	}

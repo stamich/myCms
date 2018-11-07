@@ -1,29 +1,30 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.security.web.access.channel.SecureChannelProcessor;
-import org.springframework.util.Assert;
+import org.springframework.security.web.access.channel.InsecureChannelProcessor;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Collection;
 
-public class ProxySecureChannelProcessor extends SecureChannelProcessor {
+public class ProxyInsecureChannelProcessor extends InsecureChannelProcessor {
 
 	@Override
 	public void decide(FilterInvocation invocation, Collection<ConfigAttribute> config) throws IOException, ServletException {
-		Assert.isTrue((invocation != null) && (config != null), "Nulls cannot be provided");
+		if ((invocation == null) || (config == null)) {
+			throw new IllegalArgumentException("Nulls cannot be provided");
+		}
 
 		String forwardedProto = invocation.getHttpRequest().getHeader("X-Forwarded-Proto");
 		for (ConfigAttribute attribute : config) {
 			if (supports(attribute)) {
 				if (forwardedProto != null) {
-					if (!forwardedProto.equals("https")) {
+					if (forwardedProto.equals("https")) {
 						getEntryPoint().commence(invocation.getRequest(), invocation.getResponse());
 					}
 				} else {
-					if (!invocation.getHttpRequest().isSecure()) {
+					if (invocation.getHttpRequest().isSecure()) {
 						getEntryPoint().commence(invocation.getRequest(), invocation.getResponse());
 					}
 				}

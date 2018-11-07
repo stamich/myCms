@@ -1,32 +1,16 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.domain.Blog;
-import org.wallride.domain.BlogLanguage;
-import org.wallride.domain.User;
-import org.wallride.model.SetupRequest;
-import org.wallride.repository.BlogRepository;
-import org.wallride.repository.UserRepository;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.model.Blog;
+import pl.codecity.main.model.BlogLanguage;
+import pl.codecity.main.model.User;
+import pl.codecity.main.repository.BlogRepository;
+import pl.codecity.main.repository.UserRepository;
+import pl.codecity.main.request.SetupRequest;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -43,7 +27,7 @@ public class SetupService {
 	@Resource
 	private BlogRepository blogRepository;
 
-	@CacheEvict(value = {WallRideCacheConfiguration.USER_CACHE, WallRideCacheConfiguration.BLOG_CACHE}, allEntries = true)
+	@CacheEvict(value = {MyCmsCacheConfiguration.USER_CACHE, MyCmsCacheConfiguration.BLOG_CACHE}, allEntries = true)
 	public User setup(SetupRequest request) {
 		LocalDateTime now = LocalDateTime.now();
 

@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Tagbangers, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package pl.codecity.main.service;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -22,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -37,17 +22,17 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MessageCodesResolver;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.autoconfigure.WallRideProperties;
-import org.wallride.domain.*;
-import org.wallride.exception.DuplicateCodeException;
-import org.wallride.exception.EmptyCodeException;
-import org.wallride.exception.ServiceException;
-import org.wallride.model.*;
-import org.wallride.repository.*;
-import org.wallride.support.AuthorizedUser;
-import org.wallride.support.CodeFormatter;
 import org.wallride.web.controller.admin.article.CustomFieldValueEditForm;
+import pl.codecity.main.configuration.MyCmsCacheConfiguration;
+import pl.codecity.main.configuration.MyCmsProperties;
+import pl.codecity.main.exception.DuplicateCodeException;
+import pl.codecity.main.exception.EmptyCodeException;
+import pl.codecity.main.exception.ServiceException;
+import pl.codecity.main.model.*;
+import pl.codecity.main.repository.*;
+import pl.codecity.main.request.*;
+import pl.codecity.main.utility.AuthorizedUser;
+import pl.codecity.main.utility.CodeFormatter;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -83,14 +68,14 @@ public class PageService {
 	private PlatformTransactionManager transactionManager;
 
 	@Inject
-	private WallRideProperties wallRideProperties;
+	private MyCmsProperties wallRideProperties;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	private static Logger logger = LoggerFactory.getLogger(PageService.class);
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page createPage(PageCreateRequest request, Post.Status status, AuthorizedUser authorizedUser) {
 		LocalDateTime now = LocalDateTime.now();
 
@@ -248,7 +233,7 @@ public class PageService {
 		return pageRepository.save(page);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page savePageAsDraft(PageUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Page page = pageRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -299,7 +284,7 @@ public class PageService {
 		}
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page savePageAsPublished(PageUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Page page = pageRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -313,7 +298,7 @@ public class PageService {
 		return savePage(request, authorizedUser);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page savePageAsUnpublished(PageUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Page page = pageRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -328,7 +313,7 @@ public class PageService {
 		return savePage(request, authorizedUser);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page savePage(PageUpdateRequest request, AuthorizedUser authorizedUser) {
 		postRepository.lock(request.getId());
 		Page page = pageRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -502,7 +487,7 @@ public class PageService {
 		return pageRepository.save(page);
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public void updatePageHierarchy(List<Map<String, Object>> data, String language) {
 		for (int i = 0; i < data.size(); i++) {
 			Map<String, Object> map = data.get(i);
@@ -525,7 +510,7 @@ public class PageService {
 		}
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page deletePage(PageDeleteRequest request, BindingResult result) throws BindException {
 		postRepository.lock(request.getId());
 		Page page = pageRepository.findOneByIdAndLanguage(request.getId(), request.getLanguage());
@@ -545,7 +530,7 @@ public class PageService {
 		return page;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	public Page deletePage(long id, String language) {
 		postRepository.lock(id);
 		Page page = pageRepository.findOneByIdAndLanguage(id, language);
@@ -565,7 +550,7 @@ public class PageService {
 		return page;
 	}
 
-	@CacheEvict(value = WallRideCacheConfiguration.PAGE_CACHE, allEntries = true)
+	@CacheEvict(value = MyCmsCacheConfiguration.PAGE_CACHE, allEntries = true)
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public List<Page> bulkDeletePage(PageBulkDeleteRequest bulkDeleteRequest, BindingResult result) {
 		List<Page> pages = new ArrayList<>();
@@ -604,22 +589,22 @@ public class PageService {
 		return pageRepository.searchForId(request);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.PAGE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.PAGE_CACHE)
 	public org.springframework.data.domain.Page<Page> getPages(PageSearchRequest request) {
 		return getPages(request, Pageable.unpaged());
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.PAGE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.PAGE_CACHE)
 	public org.springframework.data.domain.Page<Page> getPages(PageSearchRequest request, Pageable pageable) {
 		return pageRepository.search(request, pageable);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.PAGE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.PAGE_CACHE)
 	public List<Page> getPathPages(Page page) {
 		return getPathPages(page, false);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.PAGE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.PAGE_CACHE)
 	public List<Page> getPathPages(Page page, boolean includeUnpublished) {
 		return pageRepository.findAll(PageSpecifications.path(page, includeUnpublished));
 	}
@@ -648,7 +633,7 @@ public class PageService {
 		return pageRepository.findOneByIdAndLanguage(id, language);
 	}
 
-	@Cacheable(value = WallRideCacheConfiguration.PAGE_CACHE)
+	@Cacheable(value = MyCmsCacheConfiguration.PAGE_CACHE)
 	public Page getPageByCode(String code, String language) {
 		return pageRepository.findOneByCodeAndLanguage(code, language);
 	}

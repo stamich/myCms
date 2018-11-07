@@ -1,4 +1,4 @@
-package pl.codecity.main.utilities;
+package pl.codecity.main.utility;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
