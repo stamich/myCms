@@ -3,8 +3,10 @@ package pl.codecity.main.model;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SortNatural;
+import org.hibernate.search.annotations.*;
 import org.springframework.util.DigestUtils;
 
+import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -43,10 +45,8 @@ public class User extends DomainObject<Long> {
 	private String loginPassword;
 
 	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "firstName", column = @Column(name = "name_first", length = 50, nullable = false)),
-			@AttributeOverride(name = "lastName", column = @Column(name = "name_last", length = 50, nullable = false)),
-	})
+	@AttributeOverrides({@AttributeOverride(name = "firstName", column = @Column(name = "name_first", length = 50, nullable = false)),
+			@AttributeOverride(name = "lastName", column = @Column(name = "name_last", length = 50, nullable = false))})
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private PersonalName name = new PersonalName();
 

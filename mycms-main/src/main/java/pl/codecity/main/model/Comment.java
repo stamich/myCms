@@ -3,20 +3,15 @@ package pl.codecity.main.model;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = Comment.SHALLOW_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("author")}
-		),
-		@NamedEntityGraph(name = Comment.DEEP_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("author")})
-})
+@NamedEntityGraphs({ @NamedEntityGraph(name = Comment.SHALLOW_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("author")}),
+		@NamedEntityGraph(name = Comment.DEEP_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("author")})})
 @Table(name = "comment")
 @DynamicInsert
 @DynamicUpdate

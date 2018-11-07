@@ -4,8 +4,10 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SortNatural;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 
+import javax.persistence.*;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -24,10 +26,7 @@ public class Tag extends DomainObject<Long> implements Comparable<Tag> {
 	private long id;
 
 	@Column(length = 200, nullable = false)
-	@Fields({
-			@Field,
-			@Field(name = "sortName", analyze = Analyze.NO, index = org.hibernate.search.annotations.Index.NO)
-	})
+	@Fields({@Field, @Field(name = "sortName", analyze = Analyze.NO, index = org.hibernate.search.annotations.Index.NO)})
 	@SortableField(forField = "sortName")
 	private String name;
 
@@ -36,10 +35,7 @@ public class Tag extends DomainObject<Long> implements Comparable<Tag> {
 	private String language;
 
 	@ManyToMany
-	@JoinTable(
-			name = "post_tag",
-			joinColumns = {@JoinColumn(name = "tag_id")},
-			inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"))
+	@JoinTable(name = "post_tag", joinColumns = {@JoinColumn(name = "tag_id")}, inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"))
 	@SortNatural
 	private SortedSet<Post> posts = new TreeSet<>();
 

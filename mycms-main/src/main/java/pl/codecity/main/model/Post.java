@@ -1,8 +1,12 @@
 package pl.codecity.main.model;
 
+import org.hibernate.annotations.*;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
-import org.wallride.support.CustomFieldValuesBridge;
+import pl.codecity.main.utilities.CustomFieldValuesBridge;
 
+
+import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,17 +14,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = Post.SHALLOW_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("cover"),
-						@NamedAttributeNode("author")}
-		),
-		@NamedEntityGraph(name = Post.DEEP_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("cover"),
-						@NamedAttributeNode("author")})
-})
+@NamedEntityGraphs({@NamedEntityGraph(name = Post.SHALLOW_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("cover"), @NamedAttributeNode("author")}),
+		@NamedEntityGraph(name = Post.DEEP_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("cover"), @NamedAttributeNode("author")})})
 @Table(name = "post", uniqueConstraints = @UniqueConstraint(columnNames = {"code", "language"}))
 @Inheritance(strategy = InheritanceType.JOINED)
 @DynamicInsert
@@ -64,10 +59,7 @@ public class Post extends DomainObject<Long> {
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private Seo seo = new Seo();
 
-	@Fields({
-			@Field,
-			@Field(name = "sortDate", analyze = Analyze.NO, index = Index.NO)
-	})
+	@Fields({@Field, @Field(name = "sortDate", analyze = Analyze.NO, index = Index.NO)})
 	@SortableField(forField = "sortDate")
 	private LocalDateTime date;
 
@@ -91,19 +83,13 @@ public class Post extends DomainObject<Long> {
 	private String draftedCode;
 
 	@ManyToMany
-	@JoinTable(
-			name = "post_category",
-			joinColumns = {@JoinColumn(name = "post_id")},
-			inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+	@JoinTable(name = "post_category", joinColumns = {@JoinColumn(name = "post_id")}, inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
 	@SortNatural
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private SortedSet<Category> categories = new TreeSet<>();
 
 	@ManyToMany
-	@JoinTable(
-			name = "post_tag",
-			joinColumns = {@JoinColumn(name = "post_id")},
-			inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+	@JoinTable(name = "post_tag", joinColumns = {@JoinColumn(name = "post_id")}, inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
 	@SortNatural
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private SortedSet<Tag> tags = new TreeSet<>();
@@ -126,17 +112,11 @@ public class Post extends DomainObject<Long> {
 	private SortedSet<Comment> comments;
 
 	@ManyToMany
-	@JoinTable(
-			name = "post_related_post",
-			joinColumns = {@JoinColumn(name = "post_id")},
-			inverseJoinColumns = {@JoinColumn(name = "related_id")})
+	@JoinTable(name = "post_related_post", joinColumns = {@JoinColumn(name = "post_id")}, inverseJoinColumns = {@JoinColumn(name = "related_id")})
 	private Set<Post> relatedToPosts = new HashSet<>();
 
 	@ManyToMany
-	@JoinTable(
-			name = "post_related_post",
-			joinColumns = {@JoinColumn(name = "related_id")},
-			inverseJoinColumns = {@JoinColumn(name = "post_id")})
+	@JoinTable(name = "post_related_post", joinColumns = {@JoinColumn(name = "related_id")}, inverseJoinColumns = {@JoinColumn(name = "post_id")})
 	private Set<Post> relatedByPosts = new HashSet<>();
 
 	@ManyToMany

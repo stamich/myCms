@@ -23,9 +23,11 @@
         </license>
     </licenses>
 
+    <!--
     <scm>
         <url>https://github.com/codecity/mycms</url>
     </scm>
+    -->
 
     <developers>
         <developer>
@@ -59,8 +61,8 @@
 
     <modules>
         <module>mycms-application</module>
-        <module>mycms-main</module>
         <module>mycms-dependencies</module>
+        <module>mycms-main</module>
         <module>mycms-parent</module>
         <module>mycms-tools</module>
     </modules>

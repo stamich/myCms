@@ -8,29 +8,21 @@ import org.hibernate.search.annotations.Indexed;
 import javax.persistence.*;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = Article.SHALLOW_GRAPH_NAME,
-				attributeNodes = {
+@NamedEntityGraphs({@NamedEntityGraph(name = Article.SHALLOW_GRAPH_NAME, attributeNodes = {
 						@NamedAttributeNode("cover"),
 						@NamedAttributeNode("author"),
 						@NamedAttributeNode("drafted"),
 						@NamedAttributeNode("categories"),
-						@NamedAttributeNode("tags")
-				}),
-		@NamedEntityGraph(name = Article.DEEP_GRAPH_NAME,
-				attributeNodes = {
+						@NamedAttributeNode("tags")}),
+		@NamedEntityGraph(name = Article.DEEP_GRAPH_NAME, attributeNodes = {
 						@NamedAttributeNode("cover"),
 						@NamedAttributeNode("author"),
 						@NamedAttributeNode("drafted"),
 						@NamedAttributeNode("categories"),
 						@NamedAttributeNode("tags"),
 						@NamedAttributeNode("relatedToPosts"),
-						@NamedAttributeNode(value = "customFieldValues", subgraph = "customFieldValue")},
-				subgraphs =  {
-						@NamedSubgraph(name = "customFieldValue",
-								attributeNodes = {
-										@NamedAttributeNode("customField")})})
-})
+						@NamedAttributeNode(value = "customFieldValues", subgraph = "customFieldValue")}, subgraphs =  {
+						@NamedSubgraph(name = "customFieldValue", attributeNodes = { @NamedAttributeNode("customField")})})})
 @Table(name = "article")
 @DynamicInsert
 @DynamicUpdate

@@ -2,23 +2,20 @@ package pl.codecity.main.model;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedEntityGraphs({
-	@NamedEntityGraph(name = Page.SHALLOW_GRAPH_NAME,
-			attributeNodes = {
+@NamedEntityGraphs({@NamedEntityGraph(name = Page.SHALLOW_GRAPH_NAME, attributeNodes = {
 					@NamedAttributeNode("cover"),
 					@NamedAttributeNode("author"),
 					@NamedAttributeNode("parent"),
 					@NamedAttributeNode("children"),
 					@NamedAttributeNode("categories"),
-					@NamedAttributeNode("tags")
-			}
-	),
-	@NamedEntityGraph(name = Page.DEEP_GRAPH_NAME,
-			attributeNodes = {
+					@NamedAttributeNode("tags")}),
+	@NamedEntityGraph(name = Page.DEEP_GRAPH_NAME, attributeNodes = {
 					@NamedAttributeNode("cover"),
 					@NamedAttributeNode("author"),
 					@NamedAttributeNode("parent"),
@@ -26,12 +23,8 @@ import java.util.List;
 					@NamedAttributeNode("categories"),
 					@NamedAttributeNode("tags"),
 					@NamedAttributeNode("relatedToPosts"),
-					@NamedAttributeNode(value = "customFieldValues", subgraph = "customFieldValue")},
-			subgraphs =  {
-					@NamedSubgraph(name = "customFieldValue",
-							attributeNodes = {
-									@NamedAttributeNode("customField")})})
-})
+					@NamedAttributeNode(value = "customFieldValues", subgraph = "customFieldValue")}, subgraphs =  {
+					@NamedSubgraph(name = "customFieldValue", attributeNodes = {@NamedAttributeNode("customField")})})})
 @Table(name="page")
 @DynamicInsert
 @DynamicUpdate
@@ -44,10 +37,7 @@ public class Page extends Post implements Comparable<Page> {
 	public static final String DEEP_GRAPH_NAME = "PAGE_DEEP_GRAPH";
 
 	@Column(nullable=false)
-	@Fields({
-			@Field,
-			@Field(name = "sortLft", analyze = Analyze.NO, index = org.hibernate.search.annotations.Index.NO)
-	})
+	@Fields({@Field, @Field(name = "sortLft", analyze = Analyze.NO, index = org.hibernate.search.annotations.Index.NO)})
 	@SortableField(forField = "sortLft")
 	private int lft;
 

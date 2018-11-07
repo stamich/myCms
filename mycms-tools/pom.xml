@@ -18,8 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.wallride</groupId>
-            <artifactId>wallride-core</artifactId>
+            <groupId>pl.codecity</groupId>
+            <artifactId>mycms-main</artifactId>
+
         </dependency>
 
         <dependency>

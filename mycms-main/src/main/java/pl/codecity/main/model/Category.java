@@ -3,24 +3,17 @@ package pl.codecity.main.model;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SortNatural;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = Category.SHALLOW_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("parent"),
-						@NamedAttributeNode("children")}
-		),
-		@NamedEntityGraph(name = Category.DEEP_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("parent"),
-						@NamedAttributeNode("children")})
-})
+@NamedEntityGraphs({@NamedEntityGraph(name = Category.SHALLOW_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("parent"), @NamedAttributeNode("children")}),
+		@NamedEntityGraph(name = Category.DEEP_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("parent"), @NamedAttributeNode("children")})})
 @Table(name = "category", uniqueConstraints = @UniqueConstraint(columnNames = {"code", "language"}))
 @DynamicInsert
 @DynamicUpdate

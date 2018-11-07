@@ -20,11 +20,8 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @AnalyzerDef(name = "synonyms",
-		tokenizer =
-		@TokenizerDef(factory = JapaneseTokenizerFactory.class, params =
-		@Parameter(name = "userDictionary", value = "userdict.txt")),
-		filters = {
-				@TokenFilterDef(factory = SynonymFilterFactory.class, params = {
+		tokenizer = @TokenizerDef(factory = JapaneseTokenizerFactory.class, params = @Parameter(name = "userDictionary", value = "userdict.txt")),
+		filters = {@TokenFilterDef(factory = SynonymFilterFactory.class, params = {
 						@Parameter(name = "synonyms", value = "synonyms.txt"),
 						@Parameter(name = "userDictionary", value = "userdict.txt"),
 						@Parameter(name = "ignoreCase", value = "true"),
@@ -34,8 +31,7 @@ import java.time.LocalDateTime;
 				@TokenFilterDef(factory = CJKWidthFilterFactory.class),
 				@TokenFilterDef(factory = JapaneseKatakanaStemFilterFactory.class, params = {
 						@Parameter(name = "minimumLength", value = "4")}),
-				@TokenFilterDef(factory = LowerCaseFilterFactory.class)
-		})
+				@TokenFilterDef(factory = LowerCaseFilterFactory.class)})
 @SuppressWarnings("serial")
 public abstract class DomainObject<ID extends Serializable> implements Serializable {
 

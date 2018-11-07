@@ -3,6 +3,7 @@ package pl.codecity.main.model;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity

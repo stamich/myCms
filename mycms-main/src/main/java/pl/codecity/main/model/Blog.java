@@ -6,15 +6,12 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = Blog.DEEP_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("languages")})
-})
+@NamedEntityGraphs({ @NamedEntityGraph(name = Blog.DEEP_GRAPH_NAME, attributeNodes = { @NamedAttributeNode("languages")})})
 @Table(name = "blog")
 @DynamicInsert
 @DynamicUpdate

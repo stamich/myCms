@@ -3,6 +3,9 @@ package pl.codecity.main.model;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.search.annotations.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "popular_post", uniqueConstraints = @UniqueConstraint(columnNames = {"language", "type", "rank"}))

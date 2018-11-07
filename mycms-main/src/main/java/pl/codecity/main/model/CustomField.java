@@ -1,6 +1,5 @@
 package pl.codecity.main.model;
 
-
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -12,18 +11,15 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Entity
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = CustomField.SHALLOW_GRAPH_NAME),
-		@NamedEntityGraph(name = CustomField.DEEP_GRAPH_NAME,
-				attributeNodes = {
-						@NamedAttributeNode("options")})
-})
+@NamedEntityGraphs({@NamedEntityGraph(name = CustomField.SHALLOW_GRAPH_NAME),
+		@NamedEntityGraph(name = CustomField.DEEP_GRAPH_NAME, attributeNodes = {@NamedAttributeNode("options")})})
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code", "language"}))
 @DynamicInsert
 @DynamicUpdate
