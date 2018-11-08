@@ -76,7 +76,7 @@ public class MyCmsResourceTemplateResource implements ITemplateResource {
 			// Given we have delegated the createRelative(...) mechanism to Spring, it's better if we don't do
 			// any assumptions on what this IOException means and simply return a resource object that returns
 			// no reader and exists() == false.
-			return new WallRideResourceInvalidRelativeTemplateResource(getDescription(), relativeLocation, e);
+			return new MyCmsResourceInvalidRelativeTemplateResource(getDescription(), relativeLocation, e);
 		}
 		return new SpringResourceTemplateResource(relativeResource, this.characterEncoding);
 	}
@@ -109,13 +109,13 @@ public class MyCmsResourceTemplateResource implements ITemplateResource {
 
 	}
 
-	private static final class WallRideResourceInvalidRelativeTemplateResource implements ITemplateResource {
+	private static final class MyCmsResourceInvalidRelativeTemplateResource implements ITemplateResource {
 
 		private final String originalResourceDescription;
 		private final String relativeLocation;
 		private final IOException ioException;
 
-		WallRideResourceInvalidRelativeTemplateResource(
+		MyCmsResourceInvalidRelativeTemplateResource(
 				final String originalResourceDescription,
 				final String relativeLocation,
 				final IOException ioException) {

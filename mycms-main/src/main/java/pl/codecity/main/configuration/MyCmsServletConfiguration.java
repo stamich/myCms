@@ -17,7 +17,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
-import org.wallride.web.support.ExtendedUrlRewriteFilter;
+import pl.codecity.main.controller.support.ExtendedUrlRewriteFilter;
 
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;

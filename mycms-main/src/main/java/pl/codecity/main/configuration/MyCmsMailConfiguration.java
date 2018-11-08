@@ -31,7 +31,7 @@ public class MyCmsMailConfiguration extends MailSenderAutoConfiguration {
 	@Inject
 	private ThymeleafProperties properties;
 
-//	public WallRideMailConfiguration(MailProperties properties, ObjectProvider<Session> sessionProvider) {
+//	public MyCmsMailConfiguration(MailProperties properties, ObjectProvider<Session> sessionProvider) {
 //		super(properties, sessionProvider);
 //	}
 

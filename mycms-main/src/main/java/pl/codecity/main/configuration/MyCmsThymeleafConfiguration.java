@@ -13,8 +13,7 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.wallride.support.*;
-import org.wallride.web.support.ExtendedThymeleafViewResolver;
+import pl.codecity.main.controller.support.ExtendedThymeleafViewResolver;
 import pl.codecity.main.service.ArticleService;
 import pl.codecity.main.service.CategoryService;
 import pl.codecity.main.service.PageService;
@@ -33,7 +32,7 @@ public class MyCmsThymeleafConfiguration {
 	private ApplicationContext applicationContext;
 
 	@Autowired
-	private MyCmsProperties wallRideProperties;
+	private MyCmsProperties myCmsProperties;
 
 	@Autowired
 	private ArticleService articleService;
@@ -80,13 +79,13 @@ public class MyCmsThymeleafConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public MyCmsThymeleafDialect wallRideThymeleafDialect(MyCmsExpressionObjectFactory expressionObjectFactory) {
+	public MyCmsThymeleafDialect myCmsThymeleafDialect(MyCmsExpressionObjectFactory expressionObjectFactory) {
 		return new MyCmsThymeleafDialect(expressionObjectFactory);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
-	public MyCmsExpressionObjectFactory wallRideExpressionObjectFactory() {
+	public MyCmsExpressionObjectFactory myCmsExpressionObjectFactory() {
 		MyCmsExpressionObjectFactory expressionObjectFactory = new MyCmsExpressionObjectFactory();
 		ArticleUtils articleUtils = articleUtils();
 		PageUtils pageUtils = pageUtils();
@@ -95,16 +94,16 @@ public class MyCmsThymeleafConfiguration {
 		expressionObjectFactory.setPageUtils(pageUtils);
 		expressionObjectFactory.setCategoryUtils(categoryUtils());
 		expressionObjectFactory.setTagUtils(tagUtils());
-		expressionObjectFactory.setWallRideProperties(wallRideProperties);
+		expressionObjectFactory.setMyCmsProperties(myCmsProperties);
 		return expressionObjectFactory;
 	}
 
 	@Bean(name = {"defaultTemplateResolver", "homePathTemplateResolver"})
 	public ITemplateResolver homePathTemplateResolver() {
 		MyCmsResourceTemplateResolver resolver = new MyCmsResourceTemplateResolver();
-//		resolver.setResourceResolver(wallRideResourceResourceResolver);
+//		resolver.setResourceResolver(MyCmsResourceResourceResolver);
 		resolver.setApplicationContext(applicationContext);
-		resolver.setPrefix(wallRideProperties.getHome() + "themes/default/templates/");
+		resolver.setPrefix(myCmsProperties.getHome() + "themes/default/templates/");
 		resolver.setSuffix(this.thymeleafProperties.getSuffix());
 		resolver.setTemplateMode(this.thymeleafProperties.getMode());
 		resolver.setCharacterEncoding(this.thymeleafProperties.getEncoding().name());
@@ -116,7 +115,7 @@ public class MyCmsThymeleafConfiguration {
 	@Bean
 	public ITemplateResolver classPathTemplateResolver() {
 		MyCmsResourceTemplateResolver resolver = new MyCmsResourceTemplateResolver();
-//		resolver.setResourceResolver(wallRideResourceResourceResolver);
+//		resolver.setResourceResolver(MyCmsResourceResourceResolver);
 		resolver.setApplicationContext(applicationContext);
 		resolver.setPrefix(environment.getRequiredProperty("spring.thymeleaf.prefix.guest"));
 		resolver.setSuffix(this.thymeleafProperties.getSuffix());

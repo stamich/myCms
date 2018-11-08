@@ -23,10 +23,8 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.wallride.service.BlogService;
-import org.wallride.support.CodeFormatAnnotationFormatterFactory;
-import org.wallride.web.controller.admin.DashboardController;
-import org.wallride.web.support.*;
+import pl.codecity.main.controller.admin.DashboardController;
+import pl.codecity.main.controller.support.*;
 import pl.codecity.main.service.BlogService;
 import pl.codecity.main.utility.CodeFormatAnnotationFormatterFactory;
 
@@ -42,7 +40,7 @@ public class WebAdminConfiguration extends DelegatingWebMvcConfiguration {
 	private MessageCodesResolver messageCodesResolver;
 
 	@Autowired
-	private MyCmsThymeleafDialect wallRideThymeleafDialect;
+	private MyCmsThymeleafDialect myCmsThymeleafDialect;
 
 	@Autowired
 	private BlogService blogService;
@@ -101,7 +99,7 @@ public class WebAdminConfiguration extends DelegatingWebMvcConfiguration {
 	@Bean(name = "adminTemplateResolver")
 	public ITemplateResolver adminTemplateResolver() {
 		MyCmsResourceTemplateResolver resolver = new MyCmsResourceTemplateResolver();
-//		resolver.setResourceResolver(wallRideResourceResourceResolver);
+//		resolver.setResourceResolver(MyCmsResourceResourceResolver);
 		resolver.setApplicationContext(getApplicationContext());
 		resolver.setPrefix(environment.getRequiredProperty("spring.thymeleaf.prefix.admin"));
 		resolver.setSuffix(properties.getSuffix());
@@ -115,7 +113,7 @@ public class WebAdminConfiguration extends DelegatingWebMvcConfiguration {
 	@Bean(name = "guestTemplateResolver")
 	public ITemplateResolver guestTemplateResolver() {
 		MyCmsResourceTemplateResolver resolver = new MyCmsResourceTemplateResolver();
-//		resolver.setResourceResolver(wallRideResourceResourceResolver);
+//		resolver.setResourceResolver(MyCmsResourceResourceResolver);
 		resolver.setApplicationContext(getApplicationContext());
 		resolver.setPrefix(environment.getRequiredProperty("spring.thymeleaf.prefix.guest"));
 		resolver.setSuffix(this.properties.getSuffix());
@@ -136,7 +134,7 @@ public class WebAdminConfiguration extends DelegatingWebMvcConfiguration {
 		Set<IDialect> dialects = new HashSet<>();
 		dialects.add(new SpringSecurityDialect());
 		dialects.add(new Java8TimeDialect());
-		dialects.add(wallRideThymeleafDialect);
+		dialects.add(myCmsThymeleafDialect);
 		engine.setAdditionalDialects(dialects);
 		return engine;
 	}

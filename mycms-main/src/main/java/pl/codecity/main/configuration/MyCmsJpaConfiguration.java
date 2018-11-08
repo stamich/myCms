@@ -9,7 +9,7 @@ import pl.codecity.main.model.DomainObject;
 public class MyCmsJpaConfiguration /*extends HibernateJpaAutoConfiguration*/ {
 
     /*
-	public WallRideJpaConfiguration(DataSource dataSource, JpaProperties jpaProperties, ObjectProvider<JtaTransactionManager> jtaTransactionManager, ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
+	public MyCmsJpaConfiguration(DataSource dataSource, JpaProperties jpaProperties, ObjectProvider<JtaTransactionManager> jtaTransactionManager, ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
 		super(dataSource, jpaProperties, jtaTransactionManager, transactionManagerCustomizers);
 	}
 
