@@ -8,12 +8,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.wallride.web.controller.guest.*;
-import org.wallride.web.controller.guest.article.ArticleDescribeController;
-import org.wallride.web.controller.guest.article.ArticleIndexController;
-import org.wallride.web.controller.guest.comment.CommentRestController;
-import org.wallride.web.controller.guest.page.PageDescribeController;
-import org.wallride.web.controller.guest.user.*;
+import pl.codecity.main.controller.guest.*;
 import pl.codecity.main.service.BlogService;
 import pl.codecity.main.service.PageService;
 

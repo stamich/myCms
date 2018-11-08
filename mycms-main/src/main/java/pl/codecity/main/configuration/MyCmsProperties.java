@@ -2,12 +2,12 @@ package pl.codecity.main.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("wallride")
+@ConfigurationProperties("mycms")
 public class MyCmsProperties {
 
-	public static final String HOME_PROPERTY = "wallride.home";
-	public static final String CONFIG_LOCATION_PROPERTY = "wallride.config-location";
-	public static final String MEDIA_LOCATION_PROPERTY = "wallride.media-location";
+	public static final String HOME_PROPERTY = "mycms.home";
+	public static final String CONFIG_LOCATION_PROPERTY = "mycms.config-location";
+	public static final String MEDIA_LOCATION_PROPERTY = "mycms.media-location";
 
 	public static final String DEFAULT_CONFIG_PATH_NAME = "config/";
 	public static final String DEFAULT_MEDIA_PATH_NAME = "media/";

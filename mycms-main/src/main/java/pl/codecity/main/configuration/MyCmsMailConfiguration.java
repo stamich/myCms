@@ -38,7 +38,7 @@ public class MyCmsMailConfiguration extends MailSenderAutoConfiguration {
 	@Bean(name = "emailTemplateResolver")
 	public ITemplateResolver emailTemplateResolver() {
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-//		resolver.setResourceResolver(wallRideResourceResourceResolver);
+//		resolver.setResourceResolver(myCmsResourceResourceResolver);
 		resolver.setApplicationContext(applicationContext);
 		resolver.setPrefix(environment.getRequiredProperty("spring.thymeleaf.prefix.mail"));
 		resolver.setSuffix(this.properties.getSuffix());

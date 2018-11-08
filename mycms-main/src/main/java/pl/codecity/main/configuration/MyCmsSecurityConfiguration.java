@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.wallride.web.support.BlogLanguageRedirectStrategy;
+import pl.codecity.main.controller.support.BlogLanguageRedirectStrategy;
 import pl.codecity.main.service.AuthorizedUserDetailsService;
 
 import javax.sql.DataSource;

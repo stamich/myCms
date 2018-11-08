@@ -58,7 +58,7 @@ public abstract class GoogleAnalyticsUtils {
 				}
 			};
 			analytics = new Analytics.Builder(httpTransport, jsonFactory, httpRequestInitializer)
-					.setApplicationName("WallRide")
+					.setApplicationName("MyCms")
 					.build();
 		} catch (Exception e) {
 			logger.warn("Failed to synchronize with Google Analytics", e);

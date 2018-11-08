@@ -162,7 +162,7 @@ public class MyCmsCacheConfiguration extends CachingConfigurerSupport {
 		// @formatter:on
 
 		holder.getNamedConfigurationBuilders().put(BLOG_CACHE, cacheBuilder);
-//		holder.getNamedConfigurationBuilders().put("settings", cacheBuilder);
+		//holder.getNamedConfigurationBuilders().put("settings", cacheBuilder);
 		holder.getNamedConfigurationBuilders().put(POPULAR_POST_CACHE, cacheBuilder);
 		holder.getNamedConfigurationBuilders().put(ARTICLE_CACHE, cacheBuilder);
 		holder.getNamedConfigurationBuilders().put(PAGE_CACHE, cacheBuilder);

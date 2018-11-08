@@ -26,18 +26,20 @@ import pl.codecity.main.service.BlogService;
 @ComponentScan(basePackageClasses = BlogService.class)
 public class MyCmsAutoConfiguration {
 
-//	@Bean
-//	public WallRideResourceResourceResolver wallRideResourceResourceResolver() {
-//		return new WallRideResourceResourceResolver();
-//	}
+	/*
+	@Bean
+	public MyCmsResourceResourceResolver MyCmsResourceResourceResolver() {
+		return new MyCmsResourceResourceResolver();
+	}
+	*/
 
 	@Bean
 	public AmazonS3 amazonS3() {
-//		final String accessKey = environment.getRequiredProperty("aws.accessKey");
-//		final String secretKey = environment.getRequiredProperty("aws.secretKey");
+		//final String accessKey = environment.getRequiredProperty("aws.accessKey");
+		//final String secretKey = environment.getRequiredProperty("aws.secretKey");
 		ClientConfiguration configuration = new ClientConfiguration();
 		configuration.setMaxConnections(1000);
-//		return new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey), configuration);
+		//return new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey), configuration);
 		return new AmazonS3Client(configuration);
 	}
 }

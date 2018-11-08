@@ -3,8 +3,7 @@ package pl.codecity.main.configuration;
 import org.springframework.mobile.device.LiteDeviceResolver;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.expression.IExpressionObjectFactory;
-import org.wallride.support.*;
-import org.wallride.web.support.*;
+import pl.codecity.main.controller.support.*;
 import pl.codecity.main.utility.*;
 
 import java.util.Collections;
@@ -46,7 +45,7 @@ public class MyCmsExpressionObjectFactory implements IExpressionObjectFactory {
 
 	private TagUtils tagUtils;
 
-	private WallRideProperties wallRideProperties;
+	private MyCmsProperties myCmsProperties;
 
 	public PostUtils getPostUtils() {
 		return postUtils;
@@ -88,12 +87,12 @@ public class MyCmsExpressionObjectFactory implements IExpressionObjectFactory {
 		this.tagUtils = tagUtils;
 	}
 
-	public WallRideProperties getWallRideProperties() {
-		return wallRideProperties;
+	public MyCmsProperties getMyCmsProperties() {
+		return myCmsProperties;
 	}
 
-	public void setWallRideProperties(WallRideProperties wallRideProperties) {
-		this.wallRideProperties = wallRideProperties;
+	public void setMyCmsProperties(MyCmsProperties myCmsProperties) {
+		this.myCmsProperties = myCmsProperties;
 	}
 
 	@Override
@@ -131,7 +130,7 @@ public class MyCmsExpressionObjectFactory implements IExpressionObjectFactory {
 	}
 
 	protected Posts createPosts(IExpressionContext context) {
-		return new Posts(context, postUtils, wallRideProperties);
+		return new Posts(context, postUtils, myCmsProperties);
 	}
 
 	protected Articles createArticles(IExpressionContext context) {
@@ -151,11 +150,11 @@ public class MyCmsExpressionObjectFactory implements IExpressionObjectFactory {
 	}
 
 	protected Medias createMedias(IExpressionContext context) {
-		return new Medias(context, wallRideProperties);
+		return new Medias(context, myCmsProperties);
 	}
 
 	protected Users createUsers(IExpressionContext context) {
-		return new Users(context, wallRideProperties);
+		return new Users(context, myCmsProperties);
 	}
 
 	protected Devices createDevices(IExpressionContext context) {

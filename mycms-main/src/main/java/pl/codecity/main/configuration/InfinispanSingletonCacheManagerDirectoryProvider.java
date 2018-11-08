@@ -36,8 +36,8 @@ public class InfinispanSingletonCacheManagerDirectoryProvider implements org.hib
 
 	private Directory directory;
 
-//	private EmbeddedCacheManager cacheManager;
-	static EmbeddedCacheManager cacheManager; // #### Attension ###
+	//private EmbeddedCacheManager cacheManager;
+	static EmbeddedCacheManager cacheManager; // ### Attention! ###
 
 	private AsyncDeleteExecutorService deletesExecutor;
 
@@ -49,7 +49,7 @@ public class InfinispanSingletonCacheManagerDirectoryProvider implements org.hib
 	public void initialize(String directoryProviderName, Properties properties, BuildContext context) {
 		this.directoryProviderName = directoryProviderName;
 		this.serviceManager = context.getServiceManager();
-//		this.cacheManager = serviceManager.requestService(CacheManagerService.class).getEmbeddedCacheManager();
+		//this.cacheManager = serviceManager.requestService(CacheManagerService.class).getEmbeddedCacheManager();
 		metadataCacheName = InfinispanIntegration.getMetadataCacheName(properties);
 		dataCacheName = InfinispanIntegration.getDataCacheName(properties);
 		lockingCacheName = InfinispanIntegration.getLockingCacheName(properties);
@@ -137,8 +137,8 @@ public class InfinispanSingletonCacheManagerDirectoryProvider implements org.hib
 		} catch (IOException e) {
 			log.unableToCloseLuceneDirectory(directory, e);
 		}
-//		serviceManager.releaseService(CacheManagerService.class);
-		cacheManager.stop(); // #### Attension ###
+		//serviceManager.releaseService(CacheManagerService.class);
+		cacheManager.stop(); // ### Attention! ###
 		log.debug("Stopped InfinispanDirectory");
 	}
 

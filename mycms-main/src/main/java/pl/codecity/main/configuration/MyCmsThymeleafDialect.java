@@ -6,17 +6,17 @@ import org.thymeleaf.expression.IExpressionObjectFactory;
 
 public class MyCmsThymeleafDialect extends AbstractDialect implements IExpressionObjectDialect {
 
-	public static final String NAME = "WallRide";
+	public static final String NAME = "MyCms";
 
-	private MyCmsExpressionObjectFactory wallRideExpressionObjectFactory;
+	private MyCmsExpressionObjectFactory myCmsExpressionObjectFactory;
 
-	protected MyCmsThymeleafDialect(MyCmsExpressionObjectFactory wallRideExpressionObjectFactory) {
+	protected MyCmsThymeleafDialect(MyCmsExpressionObjectFactory myCmsExpressionObjectFactory) {
 		super(NAME);
-		this.wallRideExpressionObjectFactory = wallRideExpressionObjectFactory;
+		this.myCmsExpressionObjectFactory = myCmsExpressionObjectFactory;
 	}
 
 	@Override
 	public IExpressionObjectFactory getExpressionObjectFactory() {
-		return wallRideExpressionObjectFactory;
+		return myCmsExpressionObjectFactory;
 	}
 }
