@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" th:replace="layout::head('WallRide')" />
+		<title>WallRide</title>
+	</head>
+	<body>
+		<header th:replace="layout::header"></header>
+		<div>
+			<form id="wr-post-form" th:include="page/create::form(title=#{EditPage},id=${form.id},page=${page})" th:action="@{__${ADMIN_PATH}__/pages/edit(query=${query})}" th:object="${form}" action="#" method="post">
+			</form>
+		</div>
+		<footer>
+		</footer>
+		<div th:replace="page/create::category-create-modal"></div>
+	</body>
+</html>
