@@ -21,7 +21,7 @@
         <spring-cloud-aws.verion>2.0.0.RELEASE</spring-cloud-aws.verion>
         <spring-mobile.version>1.1.5.RELEASE</spring-mobile.version>
         <hibernate-search.version>5.7.0.Final</hibernate-search.version>
-        <lucene.version>5.5.4</lucene.version>
+        <lucene.version>7.1.0</lucene.version>
     </properties>
 
     <dependencyManagement>

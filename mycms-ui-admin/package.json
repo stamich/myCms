@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "blueimp-file-upload": "^9.20.0",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.2",
     "froala-editor": "^2.7.5",
     "jquery": "^3.3.1",
     "jquery-datetimepicker": "^2.4.0",

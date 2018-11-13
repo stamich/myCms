@@ -21,7 +21,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.2",
     "jquery": "^3.3.1",
     "jquery-lazyload": "^1.9.7",
     "jsrender": "^0.9.90"
