@@ -19,10 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
-import org.wallride.domain.CustomField;
-import org.wallride.domain.CustomField_;
-import org.wallride.model.CustomFieldSearchRequest;
+import pl.codecity.main.model.CustomField_;
 import pl.codecity.main.model.CustomField;
+import pl.codecity.main.request.CustomFieldSearchRequest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;

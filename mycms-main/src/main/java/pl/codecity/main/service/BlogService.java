@@ -71,7 +71,7 @@ public class BlogService {
 					.build();
 
 			Analytics analytics = new Analytics.Builder(httpTransport, jsonFactory, credential)
-					.setApplicationName("WallRide")
+					.setApplicationName("myCms")
 					.build();
 
 			GaData gaData = analytics.data().ga()

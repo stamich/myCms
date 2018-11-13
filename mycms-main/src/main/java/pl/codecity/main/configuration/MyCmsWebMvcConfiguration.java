@@ -25,9 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
-import org.wallride.support.CodeFormatAnnotationFormatterFactory;
-import org.wallride.support.StringFormatter;
-import org.wallride.web.support.*;
+import pl.codecity.main.controller.support.*;
 import pl.codecity.main.service.BlogService;
 import pl.codecity.main.service.MediaService;
 import pl.codecity.main.utility.CodeFormatAnnotationFormatterFactory;
@@ -46,7 +44,7 @@ public class MyCmsWebMvcConfiguration implements WebMvcConfigurer {
 	private static final String CLASSPATH_RESOURCE_LOCATION = "classpath:/resources/guest/";
 
 	@Autowired
-	private MyCmsProperties wallRideProperties;
+	private MyCmsProperties myCmsProperties;
 
 	@Autowired
 	private ResourceProperties resourceProperties = new ResourceProperties();
@@ -66,7 +64,7 @@ public class MyCmsWebMvcConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		Duration cachePeriod = this.resourceProperties.getCache().getPeriod();
-		registry.addResourceHandler("/resources/**").addResourceLocations(wallRideProperties.getHome() + "themes/default/resources/", CLASSPATH_RESOURCE_LOCATION)
+		registry.addResourceHandler("/resources/**").addResourceLocations(myCmsProperties.getHome() + "themes/default/resources/", CLASSPATH_RESOURCE_LOCATION)
 				.setCachePeriod(cachePeriod == null ? null : (int) cachePeriod.getSeconds());
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCachePeriod(cachePeriod == null ? null : (int) cachePeriod.getSeconds());
@@ -112,7 +110,7 @@ public class MyCmsWebMvcConfiguration implements WebMvcConfigurer {
 		handler.setApplicationContext(applicationContext);
 		handler.setContentNegotiationManager(contentNegotiationManager);
 
-		handler.setWallRideProperties(wallRideProperties);
+		handler.setmyCmsProperties(myCmsProperties);
 		handler.setMediaService(mediaService);
 		handler.setResourceLoader(resourceLoader);
 		handler.setCacheSeconds(86400);

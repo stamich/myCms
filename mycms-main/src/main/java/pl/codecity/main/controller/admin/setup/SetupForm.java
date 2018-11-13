@@ -25,7 +25,7 @@ public class SetupForm implements Serializable {
 //	private String mediaUrlPrefix = "/media/";
 //
 //	@NotNull
-//	private String mediaPath = "file:" + System.getProperty("java.io.tmpdir") + File.separator + "wallride" + File.separator + "media" + File.separator;
+//	private String mediaPath = "file:" + System.getProperty("java.io.tmpdir") + File.separator + "myCMS" + File.separator + "media" + File.separator;
 
 //	@NotNull
 //	private String mailSmtpHost;

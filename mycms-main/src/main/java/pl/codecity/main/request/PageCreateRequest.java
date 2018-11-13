@@ -1,6 +1,6 @@
 package pl.codecity.main.request;
 
-import org.wallride.web.controller.admin.article.CustomFieldValueEditForm;
+import pl.codecity.main.controller.admin.article.CustomFieldValueEditForm;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

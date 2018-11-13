@@ -5,7 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.CollectionUtils;
 import pl.codecity.main.model.*;
-import pl.codecity.main.repository.ArticleUpdateRequest;
+import pl.codecity.main.request.ArticleUpdateRequest;
 import pl.codecity.main.utility.CodeFormat;
 
 import javax.validation.Valid;

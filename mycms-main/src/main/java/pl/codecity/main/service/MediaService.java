@@ -25,7 +25,7 @@ public class MediaService {
 	private ResourceLoader resourceLoader;
 
 	@Autowired
-	private MyCmsProperties wallRideProperties;
+	private MyCmsProperties myCmsProperties;
 
 	@Autowired
 	private MediaRepository mediaRepository;
@@ -38,7 +38,7 @@ public class MediaService {
 
 //		Blog blog = blogService.getBlogById(Blog.DEFAULT_ID);
 		try {
-			Resource prefix = resourceLoader.getResource(wallRideProperties.getMediaLocation());
+			Resource prefix = resourceLoader.getResource(myCmsProperties.getMediaLocation());
 			Resource resource = prefix.createRelative(media.getId());
 //			AmazonS3ResourceUtils.writeMultipartFile(file, resource);
 			ExtendedResourceUtils.write(resource, file);

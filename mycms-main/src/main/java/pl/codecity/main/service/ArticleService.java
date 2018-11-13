@@ -22,20 +22,9 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MessageCodesResolver;
-import org.wallride.autoconfigure.WallRideCacheConfiguration;
-import org.wallride.autoconfigure.WallRideProperties;
-import org.wallride.domain.*;
-import org.wallride.exception.DuplicateCodeException;
-import org.wallride.exception.EmptyCodeException;
-import org.wallride.exception.NotNullException;
-import org.wallride.exception.ServiceException;
-import org.wallride.model.*;
-import org.wallride.repository.*;
-import org.wallride.support.AuthorizedUser;
-import org.wallride.support.CodeFormatter;
-import org.wallride.web.controller.admin.article.CustomFieldValueEditForm;
 import pl.codecity.main.configuration.MyCmsCacheConfiguration;
 import pl.codecity.main.configuration.MyCmsProperties;
+import pl.codecity.main.controller.admin.article.CustomFieldValueEditForm;
 import pl.codecity.main.exception.DuplicateCodeException;
 import pl.codecity.main.exception.EmptyCodeException;
 import pl.codecity.main.exception.NotNullException;
@@ -82,7 +71,7 @@ public class ArticleService {
 	private PlatformTransactionManager transactionManager;
 
 	@Inject
-	private MyCmsProperties wallRideProperties;
+	private MyCmsProperties myCmsProperties;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -188,7 +177,7 @@ public class ArticleService {
 		List<Media> medias = new ArrayList<>();
 		if (StringUtils.hasText(request.getBody())) {
 //			Blog blog = blogService.getBlogById(Blog.DEFAULT_ID);
-			String mediaUrlPrefix = wallRideProperties.getMediaUrlPrefix();
+			String mediaUrlPrefix = myCmsProperties.getMediaUrlPrefix();
 			Pattern mediaUrlPattern = Pattern.compile(String.format("%s([0-9a-zA-Z\\-]+)", mediaUrlPrefix));
 			Matcher mediaUrlMatcher = mediaUrlPattern.matcher(request.getBody());
 			while (mediaUrlMatcher.find()) {
@@ -421,7 +410,7 @@ public class ArticleService {
 		List<Media> medias = new ArrayList<>();
 		if (StringUtils.hasText(request.getBody())) {
 //			Blog blog = blogService.getBlogById(Blog.DEFAULT_ID);
-			String mediaUrlPrefix = wallRideProperties.getMediaUrlPrefix();
+			String mediaUrlPrefix = myCmsProperties.getMediaUrlPrefix();
 			Pattern mediaUrlPattern = Pattern.compile(String.format("%s([0-9a-zA-Z\\-]+)", mediaUrlPrefix));
 			Matcher mediaUrlMatcher = mediaUrlPattern.matcher(request.getBody());
 			while (mediaUrlMatcher.find()) {
