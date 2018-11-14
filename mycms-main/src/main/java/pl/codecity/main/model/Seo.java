@@ -7,6 +7,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 import java.io.Serializable;
 
+/**
+ * Search engine optimization class
+ */
 @Embeddable
 @SuppressWarnings("serial")
 public class Seo implements Serializable {
