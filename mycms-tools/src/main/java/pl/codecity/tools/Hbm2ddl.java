@@ -23,7 +23,7 @@ import java.util.EnumSet;
 public class Hbm2ddl {
 
     public static void main(String[] args) throws Exception {
-        String locationPattern = "classpath:/org/wallride/domain/*";
+        String locationPattern = "classpath:/pl/codecity/main/model/*";
 
         final BootstrapServiceRegistry registry = new BootstrapServiceRegistryBuilder().build();
         final MetadataSources metadataSources = new MetadataSources(registry);
