@@ -36,17 +36,17 @@
 								<p style="margin-bottom:5px"><time th:text="${#temporals.format(post.date, 'yyyy/MM/dd HH:mm')}"></time>&nbsp;&nbsp;&nbsp;
 									<a th:if="${post.author ne null}" class="wr-author" th:href="@{${#users.path(post.author)}}"><span class="glyphicon glyphicon-user"></span> <span th:text="${post.author}"></span></a></p>
 								<span th:unless="${#lists.isEmpty(post.tags)}">
-									<a th:each="tag : ${post.tags}" th:href="@{/wallride-ui-guest/src/templates/tag/__${tag}__}" class="wr-tag"><span class="label label-default"><span class="glyphicon glyphicon-tag"></span> <span th:text="${tag.name}">Link</span></span></a>&nbsp;&nbsp;
+									<a th:each="tag : ${post.tags}" th:href="@{/mycms-ui-guest/src/templates/tag/__${tag}__}" class="wr-tag"><span class="label label-default"><span class="glyphicon glyphicon-tag"></span> <span th:text="${tag.name}">Link</span></span></a>&nbsp;&nbsp;
 								</span>
 							</div>
 						</article>
 					</div>
 					<div class="col-md-3">
 						<div class="list-group" th:if="${category eq null}">
-							<a th:each="node : ${#categories.nodes}" th:href="@{/wallride-ui-guest/src/templates/category/__${node.object.code}__}" th:text="${node.object.name}" class="list-group-item">Link</a>
+							<a th:each="node : ${#categories.nodes}" th:href="@{/mycms-ui-guest/src/templates/category/__${node.object.code}__}" th:text="${node.object.name}" class="list-group-item">Link</a>
 						</div>
 						<div class="list-group" th:if="${category ne null}">
-							<a th:each="category : ${category.children}" th:href="@{/wallride-ui-guest/src/templates/category/__${category.code}__}" th:text="${category.name}" class="list-group-item">Link</a>
+							<a th:each="category : ${category.children}" th:href="@{/mycms-ui-guest/src/templates/category/__${category.code}__}" th:text="${category.name}" class="list-group-item">Link</a>
 						</div>
 					</div>
 				</div>

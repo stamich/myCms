@@ -37,20 +37,20 @@
 								<p style="margin-bottom:5px"><time th:text="${#temporals.format(article.date, 'yyyy/MM/dd HH:mm')}"></time>&nbsp;&nbsp;&nbsp;
 								<a th:if="${article.author ne null}" class="wr-author" th:href="@{${#users.path(article.author)}}"><span class="glyphicon glyphicon-user"></span> <span th:text="${article.author}"></span></a></p>
 								<span th:unless="${#lists.isEmpty(article.categories)}">
-									<a th:each="category : ${article.categories}" th:href="@{/wallride-ui-guest/src/templates/category/__${category.code}__}" class="wr-category"><span class="glyphicon glyphicon-bookmark"></span> <span th:text="${category.name}">Link</span></a>
+									<a th:each="category : ${article.categories}" th:href="@{/mycms-ui-guest/src/templates/category/__${category.code}__}" class="wr-category"><span class="glyphicon glyphicon-bookmark"></span> <span th:text="${category.name}">Link</span></a>
 								</span>&nbsp;&nbsp;
 								<span th:unless="${#lists.isEmpty(article.tags)}">
-									<a th:each="tag : ${article.tags}" th:href="@{/wallride-ui-guest/src/templates/tag/__${tag}__}" class="wr-tag"><span class="label label-default"><span class="glyphicon glyphicon-tag"></span> <span th:text="${tag.name}">Link</span></span></a>&nbsp;&nbsp;
+									<a th:each="tag : ${article.tags}" th:href="@{/mycms-ui-guest/src/templates/tag/__${tag}__}" class="wr-tag"><span class="label label-default"><span class="glyphicon glyphicon-tag"></span> <span th:text="${tag.name}">Link</span></span></a>&nbsp;&nbsp;
 								</span>
 							</div>
 						</article>
 					</div>
 					<div class="col-md-3">
 						<div class="list-group" th:if="${category eq null}">
-							<a th:each="node : ${#categories.nodes}" th:href="@{/wallride-ui-guest/src/templates/category/__${node.object.code}__}" th:text="${node.object.name}" class="list-group-item">Link</a>
+							<a th:each="node : ${#categories.nodes}" th:href="@{/mycms-ui-guest/src/templates/category/__${node.object.code}__}" th:text="${node.object.name}" class="list-group-item">Link</a>
 						</div>
 						<div class="list-group" th:if="${category ne null}">
-							<a th:each="category : ${category.children}" th:href="@{/wallride-ui-guest/src/templates/category/__${category.code}__}" th:text="${category.name}" class="list-group-item">Link</a>
+							<a th:each="category : ${category.children}" th:href="@{/mycms-ui-guest/src/templates/category/__${category.code}__}" th:text="${category.name}" class="list-group-item">Link</a>
 						</div>
 					</div>
 				</div>

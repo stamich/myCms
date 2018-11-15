@@ -9,9 +9,6 @@ import org.thymeleaf.templateresource.ITemplateResource;
 
 import java.util.Map;
 
-/**
- * @author OGAWA, Takeshi
- */
 public class MyCmsResourceTemplateResolver extends AbstractConfigurableTemplateResolver implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext = null;

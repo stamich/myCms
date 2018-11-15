@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="utf-8" th:replace="layout::head('WallRide')" />
-		<title>WallRide</title>
+		<meta charset="utf-8" th:replace="layout::head('CodeCity')" />
+		<title>CodeCity</title>
 	</head>
 	<body>
 		<header th:replace="layout::header"></header>
@@ -103,7 +103,7 @@
 											<input type="text" name="title" class="form-control" th:attr="placeholder=#{Title}" />
 										</div>
 										<div class="form-group">
-											<span th:text="${WEBSITE_LINK + '/page/'}">http://wallride.org/page/</span>
+											<span th:text="${WEBSITE_LINK + '/page/'}">http://codecity.pl/page/</span>
 											<input type="text" name="code" class="form-control input-sm wr-code" th:attr="placeholder=#{URLPath}" />
 										</div>
 									</div>

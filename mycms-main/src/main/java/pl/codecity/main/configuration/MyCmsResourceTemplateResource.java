@@ -10,9 +10,6 @@ import org.thymeleaf.util.Validate;
 
 import java.io.*;
 
-/**
- * @author OGAWA, Takeshi
- */
 public class MyCmsResourceTemplateResource implements ITemplateResource {
 
 	private final Resource resource;

@@ -53,7 +53,7 @@ module.exports = {
 		new ExtractTextPlugin("resources/admin/bundle.css"),
 		new CopyWebpackPlugin([
 			{ from: 'node_modules/bootstrap/dist/fonts/*', to: 'resources/admin' },
-			{ context: 'src/resources', from: 'css/wallride.custom.css', to: 'resources/admin/css' },
+			{ context: 'src/resources', from: 'css/mycms.custom.css', to: 'resources/admin/css' },
 			{ context: 'src/resources', from: 'font/**/*', to: 'resources/admin' },
 			{ context: 'src/resources', from: 'img/**/*', to: 'resources/admin' },
 			{ context: 'src/templates', from: '**/*', to: 'templates/admin' }

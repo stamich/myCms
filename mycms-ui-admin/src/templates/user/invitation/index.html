@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" th:replace="layout::head(${WEBSITE_TITLE})" />
-		<title>WallRide</title>
+		<title>CodeCity</title>
 	</head>
 	<body>
 		<header th:replace="layout::header"></header>
@@ -61,7 +61,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="invitation : ${invitations}">
-											<td th:text="${invitation.email}" style="font-weight: bold">send@tagbangers.co.jp</td>
+											<td th:text="${invitation.email}" style="font-weight: bold">m.ski@poczta.fm</td>
 											<td th:text="${invitation.createdBy}">Ogatakex</td>
 											<td th:text="${#temporals.format(invitation.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
 											<td th:text="${invitation.accepted ? 'Accepted' : 'Waiting'}">Waiting</td>

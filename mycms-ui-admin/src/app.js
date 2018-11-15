@@ -78,4 +78,4 @@ import './resources/js/jquery.mjs.nestedSortable';
 import './resources/js/common'
 
 import './resources/css/flaticon.css';
-import './resources/css/wallride.css';
+import './resources/css/mycms.css';

@@ -61,10 +61,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-/**
- *
- * @author OGAWA, Takeshi
- */
 @Service
 @Transactional(rollbackFor=Exception.class)
 public class PostService {

@@ -7,7 +7,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="org.wallride" level="DEBUG" />
+	<logger name="pl.codecity" level="DEBUG" />
 
 	<logger name="org.hibernate.search" level="INFO" />
 	<logger name="org.infinispan" level="DEBUG" />

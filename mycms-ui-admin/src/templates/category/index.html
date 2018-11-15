@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="utf-8" th:replace="layout::head('WallRide')" />
-		<title>WallRide</title>
+		<meta charset="utf-8" th:replace="layout::head('CodeCity')" />
+		<title>CodeCity</title>
 		<script src="/resources/admin/bundle.js" th:remove="all"></script>
 	</head>
 	<body>
@@ -93,7 +93,7 @@
 											<input type="text" name="name" class="form-control" th:attr="placeholder=#{CategoryName}" />
 										</div>
 										<div class="form-group">
-											<span th:text="${WEBSITE_LINK + '/category/'}">http://wallride.org/category/</span>
+											<span th:text="${WEBSITE_LINK + '/category/'}">http://codecity.pl/category/</span>
 											<input type="text" name="code" class="form-control input-sm wr-code" th:attr="placeholder=#{URLPath}" />
 										</div>
 										<div class="form-group">
@@ -163,7 +163,7 @@
 											<input type="text" name="name" th:value="${category.name}" class="form-control" th:attr="placeholder=#{CategoryName}" placeholder="Category Name" />
 										</div>
 										<div class="form-group">
-											<span th:text="${WEBSITE_LINK + '/category/'}">http://wallride.org/category/</span>
+											<span th:text="${WEBSITE_LINK + '/category/'}">http://codecity.pl/category/</span>
 											<input type="text" name="code" th:value="${category.code}" class="form-control input-sm wr-code" th:attr="placeholder=#{URLPath}" placeholder="URLパス" />
 										</div>
 										<div class="form-group">
